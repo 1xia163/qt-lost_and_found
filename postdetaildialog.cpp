@@ -1,6 +1,10 @@
 #include "postdetaildialog.h"
 #include <QPixmap>
 #include <QDateTime>
+#include <QApplication>
+#include <QClipboard>
+#include <QMessageBox>
+#include <QPushButton>
 
 PostDetailDialog::PostDetailDialog(const PostData &post, QWidget *parent)
     : QDialog(parent)
@@ -62,19 +66,81 @@ PostDetailDialog::PostDetailDialog(const PostData &post, QWidget *parent)
         layout->addWidget(contactTitle);
 
         if (!post.qq.isEmpty()) {
+            QHBoxLayout *row = new QHBoxLayout();
             QLabel *qqLabel = new QLabel("QQ：" + post.qq);
             qqLabel->setStyleSheet("font-size: 14px; color: #4A90E2;");
-            layout->addWidget(qqLabel);
+            row->addWidget(qqLabel);
+
+            QPushButton *copyBtn = new QPushButton("复制");
+            copyBtn->setFixedSize(48, 26);
+            copyBtn->setCursor(Qt::PointingHandCursor);
+            copyBtn->setStyleSheet(
+                "QPushButton {"
+                "  color: #4A90E2; font-size: 11px; border: 1px solid #4A90E2;"
+                "  border-radius: 10px; background: transparent;"
+                "}"
+                "QPushButton:hover { background: #E8F0FE; }"
+                );
+            QString qqStr = post.qq;
+            connect(copyBtn, &QPushButton::clicked, this, [this, qqStr]() {
+                QApplication::clipboard()->setText(qqStr);
+                QMessageBox::information(this, "已复制", "QQ号已复制到剪贴板");
+            });
+            row->addWidget(copyBtn);
+            row->addStretch();
+            layout->addLayout(row);
         }
+
         if (!post.wechat.isEmpty()) {
+            QHBoxLayout *row = new QHBoxLayout();
             QLabel *wechatLabel = new QLabel("微信：" + post.wechat);
             wechatLabel->setStyleSheet("font-size: 14px; color: #4A90E2;");
-            layout->addWidget(wechatLabel);
+            row->addWidget(wechatLabel);
+
+            QPushButton *copyBtn = new QPushButton("复制");
+            copyBtn->setFixedSize(48, 26);
+            copyBtn->setCursor(Qt::PointingHandCursor);
+            copyBtn->setStyleSheet(
+                "QPushButton {"
+                "  color: #4A90E2; font-size: 11px; border: 1px solid #4A90E2;"
+                "  border-radius: 10px; background: transparent;"
+                "}"
+                "QPushButton:hover { background: #E8F0FE; }"
+                );
+            QString wechatStr = post.wechat;
+            connect(copyBtn, &QPushButton::clicked, this, [this, wechatStr]() {
+                QApplication::clipboard()->setText(wechatStr);
+                QMessageBox::information(this, "已复制", "微信号已复制到剪贴板");
+            });
+            row->addWidget(copyBtn);
+            row->addStretch();
+            layout->addLayout(row);
         }
+
         if (!post.phone.isEmpty()) {
+            QHBoxLayout *row = new QHBoxLayout();
             QLabel *phoneLabel = new QLabel("电话：" + post.phone);
             phoneLabel->setStyleSheet("font-size: 14px; color: #4A90E2;");
-            layout->addWidget(phoneLabel);
+            row->addWidget(phoneLabel);
+
+            QPushButton *copyBtn = new QPushButton("复制");
+            copyBtn->setFixedSize(48, 26);
+            copyBtn->setCursor(Qt::PointingHandCursor);
+            copyBtn->setStyleSheet(
+                "QPushButton {"
+                "  color: #4A90E2; font-size: 11px; border: 1px solid #4A90E2;"
+                "  border-radius: 10px; background: transparent;"
+                "}"
+                "QPushButton:hover { background: #E8F0FE; }"
+                );
+            QString phoneStr = post.phone;
+            connect(copyBtn, &QPushButton::clicked, this, [this, phoneStr]() {
+                QApplication::clipboard()->setText(phoneStr);
+                QMessageBox::information(this, "已复制", "电话号码已复制到剪贴板");
+            });
+            row->addWidget(copyBtn);
+            row->addStretch();
+            layout->addLayout(row);
         }
     }
 

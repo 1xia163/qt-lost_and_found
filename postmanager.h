@@ -10,6 +10,7 @@ public:
 
     void addPost(const PostData &post);
     QList<PostData> getPostsByTag(const QString &tag) const;
+    QList<PostData> getPostsByAuthor(const QString &author) const;
     QList<PostData> getAllPosts() const;
 
 private:

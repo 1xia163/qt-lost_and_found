@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     post1.wechat = "";
     post1.phone = "";
     post1.time = QDateTime(QDate(2026, 5, 8), QTime(9, 15));
+    post1.author = "system";
     manager.addPost(post1);
 
     PostData post11;
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
     post11.phone = "";
     post11.images.append(":/images/upan.jpg");
     post11.time = QDateTime(QDate(2026, 5, 8), QTime(10, 30));
+    post11.author = "system";
     manager.addPost(post11);
 
     PostData post2;
@@ -39,6 +41,7 @@ int main(int argc, char *argv[])
     post2.phone = "13900002222";
     post2.images.append(":/images/dog.jpg");
     post2.time = QDateTime(QDate(2026, 5, 8), QTime(20, 45));
+    post2.author = "system";
     manager.addPost(post2);
 
     PostData post7;
@@ -50,6 +53,7 @@ int main(int argc, char *argv[])
     post7.phone = "";
     post7.images.append(":/images/book.jpg");
     post7.time = QDateTime(QDate(2026, 5, 9), QTime(11, 58));
+    post7.author = "system";
     manager.addPost(post7);
 
     PostData post3;
@@ -61,6 +65,7 @@ int main(int argc, char *argv[])
     post3.phone = "";
     post3.images.append(":/images/phone_support.jpg");
     post3.time = QDateTime(QDate(2026, 5, 9), QTime(12, 23));
+    post3.author = "system";
     manager.addPost(post3);
 
     PostData post8;
@@ -71,6 +76,7 @@ int main(int argc, char *argv[])
     post8.wechat = "";
     post8.phone = "13400006666";
     post8.time = QDateTime(QDate(2026, 5, 9), QTime(17, 53));
+    post8.author = "system";
     manager.addPost(post8);
 
     PostData post4;
@@ -82,6 +88,7 @@ int main(int argc, char *argv[])
     post4.phone = "";
     post4.images.append(":/images/earphone.jpg");
     post4.time = QDateTime(QDate(2026, 5, 9), QTime(19, 17));
+    post4.author = "system";
     manager.addPost(post4);
 
 
@@ -93,6 +100,7 @@ int main(int argc, char *argv[])
     post5.wechat = "";
     post5.phone = "13600004444";
     post5.time = QDateTime(QDate(2026, 5, 10), QTime(7, 01));
+    post5.author = "system";
     manager.addPost(post5);
 
     PostData post6;
@@ -104,6 +112,7 @@ int main(int argc, char *argv[])
     post6.phone = "";
     post6.images.append(":/images/cup.jpg");
     post6.time = QDateTime(QDate(2026, 5, 10), QTime(8, 22));
+    post6.author = "system";
     manager.addPost(post6);
 
     PostData post9;
@@ -115,6 +124,7 @@ int main(int argc, char *argv[])
     post9.phone = "13300007777";
     post9.images.append(":/images/watch.jpg");
     post9.time = QDateTime(QDate(2026, 5, 10), QTime(9, 45));
+    post9.author = "system";
     manager.addPost(post9);
 
     PostData post10;
@@ -126,6 +136,7 @@ int main(int argc, char *argv[])
     post10.phone = "13200008888";
     post10.images.append(":/images/glasses.jpg");
     post10.time = QDateTime(QDate(2026, 5, 10), QTime(10, 14));
+    post10.author = "system";
     manager.addPost(post10);
 
     // 创建主窗口

@@ -100,24 +100,36 @@ void MainWindow::setupUI()
     fabBtn->raise();
 
     // 4. 信号连接
+    // 底部导航 - 首页
     connect(btnHome, &QPushButton::clicked, this, [this]() {
         stackedWidget->setCurrentIndex(0);
         btnHome->setIcon(QIcon(":/images/blue_main.png"));
         btnProfile->setIcon(QIcon(":/images/gray_me.png"));
+         fabBtn->show();
         // 刷新首页帖子
         HomePage *hp = qobject_cast<HomePage*>(stackedWidget->widget(0));
         if (hp) {
             hp->refreshPosts();
         }
     });
+
+    // 底部导航 - 个人
     connect(btnProfile, &QPushButton::clicked, this, [this]() {
         stackedWidget->setCurrentIndex(1);
         btnHome->setIcon(QIcon(":/images/gray_main.png"));
         btnProfile->setIcon(QIcon(":/images/blue_me.png"));
+        fabBtn->hide();
+        // 刷新个人页
+        ProfilePage *pp = qobject_cast<ProfilePage*>(stackedWidget->widget(1));
+        if (pp) {
+            pp->refreshMyPosts();
+        }
     });
 
+    // FAB 按钮跳转发帖页
     connect(fabBtn, &QPushButton::clicked, this, [this]() {
         stackedWidget->setCurrentIndex(2);
+        fabBtn->hide();
     });
 
     // 发帖取消
@@ -139,6 +151,7 @@ void MainWindow::setupUI()
                 data.wechat = wechat;
                 data.phone = phone;
                 data.images = images;
+                data.author = "user";
                 data.time = QDateTime::currentDateTime();
                 PostManager::instance().addPost(data);
                 // 刷新首页帖子列表
@@ -146,8 +159,10 @@ void MainWindow::setupUI()
                 if (hp) {
                     hp->refreshPosts();
                 }
+                data.author = "user";
                 stackedWidget->setCurrentIndex(0);
             });
+
     // 初始加载帖子
     HomePage *hp = qobject_cast<HomePage*>(stackedWidget->widget(0));
     if (hp) {

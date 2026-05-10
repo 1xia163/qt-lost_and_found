@@ -14,7 +14,7 @@ ShowPostsPage::ShowPostsPage(const QString &tag, QWidget *parent)
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
-    // ---- 顶部返回栏 ----
+    // 顶部返回栏
     QWidget *topBar = new QWidget(this);
     topBar->setFixedHeight(44);
     topBar->setStyleSheet("background-color: #FFFFFF; border-bottom: 1px solid #E5E5E5;");
@@ -49,7 +49,7 @@ ShowPostsPage::ShowPostsPage(const QString &tag, QWidget *parent)
         }
     });
 
-    // ---- 图片墙滚动区 ----
+    //图片墙滚动区
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
     scrollArea->setStyleSheet("QScrollArea { border: none; }");

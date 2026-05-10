@@ -14,6 +14,7 @@ struct PostData {
     QString phone;      // 电话
     QStringList images; // 图片路径列表
     QDateTime time;     //发布时间
+    QString author;     //发布作者
 };
 
 #endif // POSTDATA_H

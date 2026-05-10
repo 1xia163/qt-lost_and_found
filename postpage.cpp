@@ -5,7 +5,7 @@
 
 PostPage::PostPage(QWidget *parent) : QWidget(parent)
 {
-    // 外层滚动区域，防止内容太多显示不下
+    // 外层滚动区域
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
     scrollArea->setStyleSheet("QScrollArea { border: none; }");
@@ -15,7 +15,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
     mainLayout->setContentsMargins(20, 20, 20, 20);
     mainLayout->setSpacing(16);
 
-    // ===== 顶部栏：取消 + 标题 + 发布 =====
+    // 顶部栏：取消 + 标题 + 发布
     QHBoxLayout *topBar = new QHBoxLayout();
     cancelBtn = new QPushButton("取消");
     cancelBtn->setStyleSheet("color: #8E8E93; font-size: 15px; border: none; background: transparent;");
@@ -43,7 +43,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
     topBar->addWidget(submitBtn);
     mainLayout->addLayout(topBar);
 
-    // ===== 标签选择：发现 / 寻找 =====
+    //标签选择：发现 / 寻找
     QHBoxLayout *tagLayout = new QHBoxLayout();
     QLabel *tagLabel = new QLabel("标签：");
     tagLabel->setStyleSheet("font-size: 15px; color: #1D1D1F;");
@@ -64,7 +64,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
     tagLayout->addStretch();
     mainLayout->addLayout(tagLayout);
 
-    // ===== 物品名称 =====
+    //物品名称
     QLabel *titleLabel = new QLabel("物品名称");
     titleLabel->setStyleSheet("font-size: 15px; color: #1D1D1F;");
     mainLayout->addWidget(titleLabel);
@@ -82,7 +82,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
         );
     mainLayout->addWidget(titleEdit);
 
-    // ===== 详细描述 =====
+    //详细描述
     QLabel *detailLabel = new QLabel("详细描述");
     detailLabel->setStyleSheet("font-size: 15px; color: #1D1D1F;");
     mainLayout->addWidget(detailLabel);
@@ -101,7 +101,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
         );
     mainLayout->addWidget(detailEdit);
 
-    // ===== 添加图片 =====
+    //添加图片
     QLabel *imageTitle = new QLabel("添加图片（选填）");
     imageTitle->setStyleSheet("font-size: 15px; color: #1D1D1F;");
     mainLayout->addWidget(imageTitle);
@@ -130,7 +130,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
 
     connect(addImageBtn, &QPushButton::clicked, this, &PostPage::onAddImage);
 
-    // ===== 联系方式 =====
+    //联系方式
     QLabel *contactTitle = new QLabel("联系方式（选填）");
     contactTitle->setStyleSheet("font-size: 15px; color: #1D1D1F;");
     mainLayout->addWidget(contactTitle);
@@ -173,7 +173,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
     outerLayout->setContentsMargins(0, 0, 0, 0);
     outerLayout->addWidget(scrollArea);
 
-    // ===== 信号连接 =====
+    //信号连接
     connect(submitBtn, &QPushButton::clicked, this, &PostPage::onSubmit);
     connect(cancelBtn, &QPushButton::clicked, this, [this]() {
         emit cancelPost();
@@ -194,7 +194,6 @@ void PostPage::onSubmit()
         return;
     }
 
-    // 发送信号时带上图片路径
     emit postSubmitted(tag, title, detail, qq, wechat, phone, selectedImages);
 
     // 清空表单

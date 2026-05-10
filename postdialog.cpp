@@ -5,7 +5,7 @@
 PostDialog::PostDialog(QWidget *parent)
     : QDialog(parent)
 {
-    setWindowTitle("发布失物信息");
+    setWindowTitle("发布信息");
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     layout->addWidget(new QLabel("物品名称/标题:"));

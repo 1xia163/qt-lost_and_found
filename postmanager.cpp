@@ -26,3 +26,14 @@ QList<PostData> PostManager::getAllPosts() const
 {
     return posts;
 }
+
+QList<PostData> PostManager::getPostsByAuthor(const QString &author) const
+{
+    QList<PostData> result;
+    for (const PostData &post : posts) {
+        if (post.author == author) {
+            result.append(post);
+        }
+    }
+    return result;
+}
