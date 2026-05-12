@@ -7,6 +7,7 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include "userdata.h"
+#include <QSoundEffect>
 
 class ProfilePage : public QWidget
 {
@@ -22,10 +23,12 @@ private:
     QLabel *nicknameLabel;
     QLabel *bioLabel;
     QLabel *avatarLabel;
+    QSoundEffect *clickSound;
 
     void refreshUserInfo();
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 };
 
 

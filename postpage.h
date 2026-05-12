@@ -11,9 +11,11 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFileDialog>
+#include <QSoundEffect>
 
 class PostPage : public QWidget {
     Q_OBJECT
+    QSoundEffect *clickSound;
 
 public:
     explicit PostPage(QWidget *parent = nullptr);
@@ -49,6 +51,8 @@ private:
 
     QPushButton *submitBtn;
     QPushButton *cancelBtn;
+protected:
+    void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // POSTPAGE_H

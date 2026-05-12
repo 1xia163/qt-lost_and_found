@@ -2,13 +2,23 @@
 #include <QScrollArea>
 #include <QMessageBox>
 #include <QPixmap>
+#include <QPainter>
 
 PostPage::PostPage(QWidget *parent) : QWidget(parent)
 {
+    clickSound = new QSoundEffect(this);
+
+    clickSound->setSource(
+        QUrl("qrc:/effects/click.wav")
+        );
+
+    clickSound->setVolume(0.5);
+
     // 外层滚动区域
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
-    scrollArea->setStyleSheet("QScrollArea { border: none; }");
+   scrollArea->setStyleSheet("QScrollArea { border: none; background: transparent; }");
+
 
     QWidget *contentWidget = new QWidget();
     QVBoxLayout *mainLayout = new QVBoxLayout(contentWidget);
@@ -176,6 +186,7 @@ PostPage::PostPage(QWidget *parent) : QWidget(parent)
     //信号连接
     connect(submitBtn, &QPushButton::clicked, this, &PostPage::onSubmit);
     connect(cancelBtn, &QPushButton::clicked, this, [this]() {
+        clickSound->play();
         emit cancelPost();
     });
 }
@@ -236,5 +247,18 @@ void PostPage::setDefaultTag(const QString &tag)
         radioLost->setChecked(true);
     } else {
         radioFound->setChecked(true);
+    }
+}
+#include <QPainter>
+
+void PostPage::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+    QPainter painter(this);
+    QPixmap bg(":/images/background3.png");
+    if (!bg.isNull()) {
+        painter.drawPixmap(this->rect(), bg.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    } else {
+        painter.fillRect(this->rect(), QColor("#F7F8FA"));
     }
 }

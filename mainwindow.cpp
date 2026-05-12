@@ -8,7 +8,6 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -26,9 +25,17 @@ void MainWindow::setupUI()
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
+    clickSound = new QSoundEffect(this);
+
+    clickSound->setSource(
+        QUrl("qrc:/effects/click.wav")
+        );
+
+    clickSound->setVolume(0.5);
+
     //顶部装饰导航栏
     QLabel *topBar = new QLabel(this);
-    QPixmap topPixmap(":/images/up.png");
+    QPixmap topPixmap(":/images/up3.png");
     topBar->setPixmap(topPixmap.scaledToWidth(375, Qt::SmoothTransformation));
     topBar->setFixedHeight(44);
     topBar->setScaledContents(false);
@@ -64,14 +71,14 @@ void MainWindow::setupUI()
     // 2. 底部导航容器
     QWidget *navBar = new QWidget(this);
     navBar->setFixedHeight(50);
-    navBar->setStyleSheet("background-color: #FFFFFF; border-top: 1px solid #E5E5E5;");
+    navBar->setStyleSheet("background-color: #ffe7cc; border-top: 1px solid #E5E5E5;");
 
     QHBoxLayout *navLayout = new QHBoxLayout(navBar);
     navLayout->setContentsMargins(40, 0, 40, 0);
     navLayout->setSpacing(0);
 
     btnHome = new QPushButton(this);
-    btnHome->setIcon(QIcon(":/images/blue_main.png"));
+    btnHome->setIcon(QIcon(":/images/main_light.png"));
     btnHome->setIconSize(QSize(48, 48));
     btnHome->setFlat(true);
     btnHome->setCursor(Qt::PointingHandCursor);
@@ -79,7 +86,7 @@ void MainWindow::setupUI()
     navLayout->addWidget(btnHome);
 
     btnProfile = new QPushButton(this);
-    btnProfile->setIcon(QIcon(":/images/gray_me.png"));
+    btnProfile->setIcon(QIcon(":/images/all_light.png"));
     btnProfile->setIconSize(QSize(48, 48));
     btnProfile->setFlat(true);
     btnProfile->setCursor(Qt::PointingHandCursor);
@@ -91,7 +98,7 @@ void MainWindow::setupUI()
     // 3. FAB 按钮
     fabBtn = new QPushButton(this);
     fabBtn->setFixedSize(90, 90);
-    fabBtn->setIcon(QIcon(":/images/jiahao.png"));
+    fabBtn->setIcon(QIcon(":/images/jiahao3.png"));
     fabBtn->setIconSize(QSize(90, 90));
     fabBtn->setFlat(true);
     fabBtn->setCursor(Qt::PointingHandCursor);
@@ -103,8 +110,8 @@ void MainWindow::setupUI()
     // 底部导航 - 首页
     connect(btnHome, &QPushButton::clicked, this, [this]() {
         stackedWidget->setCurrentIndex(0);
-        btnHome->setIcon(QIcon(":/images/blue_main.png"));
-        btnProfile->setIcon(QIcon(":/images/gray_me.png"));
+        btnHome->setIcon(QIcon(":/images/main_light.png"));
+        btnProfile->setIcon(QIcon(":/images/all_light.png"));
          fabBtn->show();
         // 刷新首页帖子
         HomePage *hp = qobject_cast<HomePage*>(stackedWidget->widget(0));
@@ -115,9 +122,10 @@ void MainWindow::setupUI()
 
     // 底部导航 - 个人
     connect(btnProfile, &QPushButton::clicked, this, [this]() {
+        clickSound->play();
         stackedWidget->setCurrentIndex(1);
-        btnHome->setIcon(QIcon(":/images/gray_main.png"));
-        btnProfile->setIcon(QIcon(":/images/blue_me.png"));
+        btnHome->setIcon(QIcon(":/images/all_light.png"));
+        btnProfile->setIcon(QIcon(":/images/self_light.png"));
         fabBtn->hide();
         // 刷新个人页
         ProfilePage *pp = qobject_cast<ProfilePage*>(stackedWidget->widget(1));
@@ -128,12 +136,16 @@ void MainWindow::setupUI()
 
     // FAB 按钮跳转发帖页
     connect(fabBtn, &QPushButton::clicked, this, [this]() {
+        clickSound->play();
+        clickSound->play();
         stackedWidget->setCurrentIndex(2);
         fabBtn->hide();
     });
 
     // 发帖取消
     connect(postPage, &PostPage::cancelPost, this, [this]() {
+        clickSound->play();
+       clickSound->play();
         stackedWidget->setCurrentIndex(0);
     });
 
@@ -143,6 +155,7 @@ void MainWindow::setupUI()
                    const QString &qq, const QString &wechat, const QString &phone,
                    const QStringList &images)
             {
+                clickSound->play();
                 PostData data;
                 data.tag = tag;
                 data.title = title;

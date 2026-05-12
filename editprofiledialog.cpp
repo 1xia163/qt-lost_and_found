@@ -10,6 +10,7 @@ EditProfileDialog::EditProfileDialog(QWidget *parent)
 {
     setWindowTitle("编辑个人资料");
     setFixedSize(320, 280);
+    setStyleSheet("QDialog { background-color: #FFE7CC; }");
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setSpacing(16);

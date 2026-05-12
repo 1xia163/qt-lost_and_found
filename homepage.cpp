@@ -4,12 +4,18 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QPixmap>
+#include <QPainter>
+#include <QSoundEffect>
 
 HomePage::HomePage(QWidget *parent) : QWidget(parent)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
+
+    clickSound = new QSoundEffect(this);
+    clickSound->setSource(QUrl("qrc:/effects/click.wav"));
+    clickSound->setVolume(0.5);
 
     // ---- 两个矩形按钮 ----
     QHBoxLayout *topBtnLayout = new QHBoxLayout();
@@ -18,7 +24,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
 
     btnDiscover = new QPushButton(this);
     btnDiscover->setFixedSize(175, 80);
-    btnDiscover->setIcon(QIcon(":/images/found.png"));
+    btnDiscover->setIcon(QIcon(":/images/found3.png"));
     btnDiscover->setIconSize(QSize(175, 80));
     btnDiscover->setFlat(true);
     btnDiscover->setCursor(Qt::PointingHandCursor);
@@ -27,7 +33,7 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
 
     btnSearch = new QPushButton(this);
     btnSearch->setFixedSize(175, 80);
-    btnSearch->setIcon(QIcon(":/images/to_find.png"));
+    btnSearch->setIcon(QIcon(":/images/to_find3.png"));
     btnSearch->setIconSize(QSize(175, 80));
     btnSearch->setFlat(true);
     btnSearch->setCursor(Qt::PointingHandCursor);
@@ -38,20 +44,25 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
 
     // 点击信号
     connect(btnDiscover, &QPushButton::clicked, this, [this]() {
+        clickSound->play();
         emit goToPost(QStringLiteral("发现"));
     });
     connect(btnSearch, &QPushButton::clicked, this, [this]() {
+        clickSound->play();
         emit goToPost(QStringLiteral("寻找"));
     });
 
-    //  滚动区域（帖子列表）
-    scrollArea = new QScrollArea(this);
+    // 滚动区域（帖子列表）
+    QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
-    scrollArea->setStyleSheet("QScrollArea { border: none; background: #F7F8FA; }");
+    scrollArea->setStyleSheet("QScrollArea { border: none; background: transparent; }");
+    scrollArea->setAutoFillBackground(false);
+    scrollArea->viewport()->setStyleSheet("background: transparent;");
+    scrollArea->viewport()->setAutoFillBackground(false);
 
-    contentWidget = new QWidget();
-    contentWidget->setStyleSheet("background: #F7F8FA;");
-    contentWidget->setFixedWidth(375);
+    QWidget *contentWidget = new QWidget();
+    contentWidget->setStyleSheet("background: transparent;");
+    contentWidget->setAutoFillBackground(false);
 
     contentLayout = new QVBoxLayout(contentWidget);
     contentLayout->setContentsMargins(12, 8, 12, 12);
@@ -60,6 +71,15 @@ HomePage::HomePage(QWidget *parent) : QWidget(parent)
 
     scrollArea->setWidget(contentWidget);
     mainLayout->addWidget(scrollArea, 1);
+}
+
+void HomePage::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    QPixmap bg(":/images/background3.png");
+    if (!bg.isNull()) {
+        painter.drawPixmap(this->rect(), bg.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    }
 }
 
 void HomePage::refreshPosts()
@@ -75,7 +95,6 @@ void HomePage::refreshPosts()
     QList<PostData> posts = PostManager::instance().getAllPosts();
 
     for (const PostData &post : posts) {
-        // 卡片容器
         QWidget *card = new QWidget();
         card->setFixedWidth(351);
         card->setStyleSheet(
@@ -90,7 +109,6 @@ void HomePage::refreshPosts()
         cardLayout->setContentsMargins(12, 12, 12, 12);
         cardLayout->setSpacing(12);
 
-        // 左侧图片
         QLabel *imageLabel = new QLabel();
         imageLabel->setFixedSize(80, 80);
         imageLabel->setStyleSheet("border-radius: 8px; background: #F2F2F7;");
@@ -105,7 +123,6 @@ void HomePage::refreshPosts()
         }
         cardLayout->addWidget(imageLabel);
 
-        // 右侧文字区
         QVBoxLayout *textLayout = new QVBoxLayout();
         textLayout->setSpacing(6);
 
@@ -132,14 +149,13 @@ void HomePage::refreshPosts()
         detailLabel->setWordWrap(true);
         detailLabel->setMaximumHeight(32);
         textLayout->addWidget(detailLabel);
-        // 时间
+
         QLabel *timeLabel = new QLabel(post.time.toString("MM-dd hh:mm"));
         timeLabel->setStyleSheet("font-size: 11px; color: #C7C7CC; border: none; background: transparent;");
         textLayout->addWidget(timeLabel);
 
         cardLayout->addLayout(textLayout, 1);
 
-        // 透明按钮覆盖整个卡片
         QPushButton *clickBtn = new QPushButton(card);
         clickBtn->setStyleSheet("border: none; background: transparent;");
         clickBtn->setCursor(Qt::PointingHandCursor);

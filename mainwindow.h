@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QSoundEffect>
 
 class PostPage;
 class ShowPostsPage;
@@ -27,6 +28,7 @@ private:
     QPushButton *fabBtn;
     PostPage *postPage;
     QWidget *showPostsPage = nullptr;
+    QSoundEffect *clickSound;
 };
 
 #endif // MAINWINDOW_H

@@ -7,9 +7,11 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 #include "postdata.h"
+#include <QSoundEffect>
 
 class PostDetailDialog : public QDialog {
     Q_OBJECT
+    QSoundEffect *clickSound;
 public:
     explicit PostDetailDialog(const PostData &post, QWidget *parent = nullptr);
 };

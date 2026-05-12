@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QScrollArea>
 #include "postdata.h"
+#include <QSoundEffect>
 
 class ShowPostsPage : public QWidget {
     Q_OBJECT
@@ -22,6 +23,7 @@ private:
     QList<PostData> posts;
     QGridLayout *gridLayout;
     QWidget *gridWidget;
+    QSoundEffect *clickSound;
 };
 
 #endif // SHOWPOSTSPAGE_H

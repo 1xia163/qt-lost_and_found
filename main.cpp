@@ -2,10 +2,14 @@
 #include "mainwindow.h"
 #include "postmanager.h"
 #include "postdata.h"
+#include "soundmanager.h"
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    SoundManager::instance().startBGM();  // 启动背景音乐
 
     PostManager &manager = PostManager::instance();
 

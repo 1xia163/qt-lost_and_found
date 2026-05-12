@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/all_light.png</file>
+        <file>images/background3.png</file>
+        <file>images/blue_main.png</file>
+        <file>images/blue_me.png</file>
+        <file>images/book.jpg</file>
+        <file>images/cup.jpg</file>
+        <file>images/dog.jpg</file>
+        <file>images/earphone.jpg</file>
+        <file>images/found.png</file>
+        <file>images/found2.png</file>
+        <file>images/found3.png</file>
+        <file>images/glasses.jpg</file>
+        <file>images/gray_main.png</file>
+        <file>images/gray_me.png</file>
+        <file>images/jiahao.png</file>
+        <file>images/jiahao3.png</file>
+        <file>images/main_light.png</file>
+        <file>images/phone_support.jpg</file>
+        <file>images/self_light.png</file>
+        <file>images/suosoulan.png</file>
+        <file>images/to_find.png</file>
+        <file>images/to_find2.png</file>
+        <file>images/to_find3.png</file>
+        <file>images/up.png</file>
+        <file>images/up3.png</file>
+        <file>images/upan.jpg</file>
+        <file>images/watch.jpg</file>
+    </qresource>
+</RCC>

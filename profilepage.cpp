@@ -9,20 +9,29 @@
 #include "editprofiledialog.h"
 #include <QMouseEvent>
 #include <QFileDialog>
+#include <QPainter>
 
 
 ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent)
 {
+    clickSound = new QSoundEffect(this);
+
+    clickSound->setSource(
+        QUrl("qrc:/effects/click.wav")
+        );
+
+    clickSound->setVolume(0.5);
+
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
-    scrollArea->setStyleSheet("QScrollArea { border: none; background: #F7F8FA; }");
+    scrollArea->setStyleSheet("QScrollArea { border: none; background: transparent; }");
 
     QWidget *contentWidget = new QWidget();
-    contentWidget->setStyleSheet("background: #F7F8FA;");
+    contentWidget->setStyleSheet("background: transparent;");
     QVBoxLayout *contentLayout = new QVBoxLayout(contentWidget);
     contentLayout->setContentsMargins(20, 30, 20, 20);
     contentLayout->setSpacing(20);
@@ -33,10 +42,6 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent)
     avatarLabel->installEventFilter(this);  // 需要事件过滤器
     avatarLabel->setFixedSize(80, 80);
     avatarLabel->setStyleSheet("border-radius: 40px; background: #E5E5E5;");
-    QLabel *hintLabel = new QLabel("点击修改头像");
-    hintLabel->setStyleSheet("font-size: 11px; color: #C7C7CC;");
-    hintLabel->setAlignment(Qt::AlignCenter);
-    contentLayout->addWidget(hintLabel);
     QPixmap avatar(currentUser.avatarPath);
     if (!avatar.isNull()) {
         avatarLabel->setPixmap(avatar.scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
@@ -47,18 +52,24 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent)
     }
     contentLayout->addWidget(avatarLabel, 0, Qt::AlignCenter);
 
+    QLabel *hintLabel = new QLabel("点击修改头像");
+    hintLabel->setStyleSheet("font-size: 11px; color: #C7C7CC;");
+    hintLabel->setAlignment(Qt::AlignCenter);
+    contentLayout->addWidget(hintLabel);
+
+
     nicknameLabel = new QLabel(currentUser.nickname);
     nicknameLabel->setStyleSheet("font-size: 20px; font-weight: bold; color: #1D1D1F;");
     nicknameLabel->setAlignment(Qt::AlignCenter);
     contentLayout->addWidget(nicknameLabel);
 
     QLabel *idLabel = new QLabel("学号：" + currentUser.studentId);
-    idLabel->setStyleSheet("font-size: 13px; color: #8E8E93;");
+    idLabel->setStyleSheet("font-size: 13px; color: #6D4C41;");
     idLabel->setAlignment(Qt::AlignCenter);
     contentLayout->addWidget(idLabel);
 
     bioLabel = new QLabel(currentUser.bio);
-    bioLabel->setStyleSheet("font-size: 13px; color: #8E8E93;");
+    bioLabel->setStyleSheet("font-size: 13px; color: #6D4C41;");
     bioLabel->setAlignment(Qt::AlignCenter);
     contentLayout->addWidget(bioLabel);
 
@@ -72,6 +83,7 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent)
         );
     contentLayout->addWidget(editBtn, 0, Qt::AlignCenter);
     connect(editBtn, &QPushButton::clicked, this, [this]() {
+       clickSound->play();
         EditProfileDialog dialog(this);
         if (dialog.exec() == QDialog::Accepted) {
             QString newNickname = dialog.getNickname();
@@ -89,7 +101,7 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent)
     // 分割线
     QWidget *divider = new QWidget();
     divider->setFixedHeight(1);
-    divider->setStyleSheet("background: #E5E5E5;");
+    divider->setStyleSheet("background:#F0D5BE;");
     contentLayout->addWidget(divider);
 
     // ===== 我的帖子标题 =====
@@ -105,7 +117,7 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent)
     contentLayout->addStretch();
 
     // 关于
-    QLabel *aboutLabel = new QLabel("失物招领小程序 v1.0");
+    QLabel *aboutLabel = new QLabel("失物招领 v3.0");
     aboutLabel->setStyleSheet("font-size: 12px; color: #C7C7CC;");
     aboutLabel->setAlignment(Qt::AlignCenter);
     contentLayout->addWidget(aboutLabel);
@@ -225,4 +237,15 @@ bool ProfilePage::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
     return QWidget::eventFilter(obj, event);
+}
+void ProfilePage::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+    QPainter painter(this);
+    QPixmap bg(":/images/background3.png");
+    if (!bg.isNull()) {
+        painter.drawPixmap(this->rect(), bg.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    } else {
+        painter.fillRect(this->rect(), QColor("#F7F8FA"));
+    }
 }

@@ -16,18 +16,7 @@
   <property name="styleSheet">
    <string notr="true">Chang StyleSheet</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="headerFrame" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>120</width>
-      <height>80</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -37,12 +26,6 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menubackground_F8F8F8">
-    <property name="title">
-     <string>background:#F8F8F8;</string>
-    </property>
-   </widget>
-   <addaction name="menubackground_F8F8F8"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

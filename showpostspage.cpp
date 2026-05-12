@@ -10,6 +10,14 @@
 ShowPostsPage::ShowPostsPage(const QString &tag, QWidget *parent)
     : QWidget(parent), tag(tag)
 {
+    clickSound = new QSoundEffect(this);
+
+    clickSound->setSource(
+        QUrl("qrc:/effects/click.wav")
+        );
+
+    clickSound->setVolume(0.5);
+
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -41,6 +49,7 @@ ShowPostsPage::ShowPostsPage(const QString &tag, QWidget *parent)
     // 返回按钮点击时回到首页
     connect(backBtn, &QPushButton::clicked, this, [this]()
     {
+        clickSound->play();
         if (parentWidget()) {
             QStackedWidget *stack = qobject_cast<QStackedWidget*>(parentWidget());
             if (stack) {

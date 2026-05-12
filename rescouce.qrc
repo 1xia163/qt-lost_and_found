@@ -17,5 +17,15 @@
         <file>images/phone_support.jpg</file>
         <file>images/upan.jpg</file>
         <file>images/watch.jpg</file>
+        <file>images/all_light.png</file>
+        <file>images/background2.0.png</file>
+        <file>images/found2.0.png</file>
+        <file>images/main_light.png</file>
+        <file>images/self_light.png</file>
+        <file>images/to_find2.0.png</file>
+        <file>images/found3.0.png</file>
+        <file>images/to_find3.0.png</file>
+        <file>images/up3.0.png</file>
+        <file>images/jiahao3.0.png</file>
     </qresource>
 </RCC>

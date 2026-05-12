@@ -8,7 +8,7 @@
 #include <QHBoxLayout>
 #include <QScrollArea>
 #include <QList>
-#include "postdata.h"
+#include <QSoundEffect>
 
 class PostManager;
 
@@ -30,6 +30,10 @@ private:
     QScrollArea *scrollArea;
     QWidget *contentWidget;
     QVBoxLayout *contentLayout;
+    QSoundEffect *clickSound;
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // HOMEPAGE_H

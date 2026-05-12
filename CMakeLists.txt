@@ -1,90 +1,48 @@
-cmake_minimum_required(VERSION 3.16)
-
-project(LostFind VERSION 0.1 LANGUAGES CXX)
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
+cmake_minimum_required(VERSION 3.19)
+project(Lost_and_Found LANGUAGES CXX)
 set(CMAKE_AUTORCC ON)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Multimedia)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+qt_standard_project_setup()
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+qt_add_executable(Lost_and_Found
+    WIN32 MACOSX_BUNDLE
+    widget.cpp  widget.h   widget.ui
+    editprofiledialog.cpp editprofiledialog.h
+    homepage.cpp homepage.h
+    main.cpp
+    mainwindow.cpp mainwindow.h mainwindow.ui
+    postdata.h
+    postdetaildialog.cpp postdetaildialog.h
+    postdialog.cpp postdialog.h
+    postmanager.cpp postmanager.h
+    postpage.cpp postpage.h postpage.ui
+    profilepage.cpp profilepage.h
+    showpostspage.cpp showpostspage.h
+    soundmanager.cpp soundmanager.h
+    userdata.h widget.cpp widget.h widget.ui
 
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+    effects/bgm.wav effects/click.wav
+    resources.qrc
+
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(LostFind
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-        profilepage.h
-        profilepage.h
-        profilepage.cpp
-        homepage.h
-        homepage.cpp
-        postdialog.h
-        postdialog.cpp
-        rescouce.qrc
-        postpage.h postpage.cpp postpage.ui
-        postdata.h
-        postmanager.h
-        postmanager.cpp
-        postdetaildialog.h
-        postdetaildialog.cpp
-        showpostspage.h
-        showpostspage.cpp
-        userdata.h
-        editprofiledialog.h
-        editprofiledialog.cpp
-
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET LostFind APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(LostFind SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(LostFind
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
-
-target_link_libraries(LostFind PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.LostFind)
-endif()
-set_target_properties(LostFind PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+target_link_libraries(Lost_and_Found
+    PRIVATE
+        Qt6::Widgets
+        Qt6::Multimedia
 )
 
-include(GNUInstallDirs)
-install(TARGETS LostFind
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+install(TARGETS Lost_and_Found
+    BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(LostFind)
-endif()
+
+qt_generate_deploy_app_script(
+    TARGET Lost_and_Found
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})

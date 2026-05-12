@@ -5,18 +5,29 @@
 #include <QClipboard>
 #include <QMessageBox>
 #include <QPushButton>
+#include "soundmanager.h"
 
 PostDetailDialog::PostDetailDialog(const PostData &post, QWidget *parent)
     : QDialog(parent)
 {
+    clickSound = new QSoundEffect(this);
+
+    clickSound->setSource(
+        QUrl("qrc:/effects/click.wav")
+        );
+
+    clickSound->setVolume(0.5);
+
     setWindowTitle("帖子详情");
     setFixedSize(340, 500);
+    setStyleSheet("QDialog { background-color: #FFE7CC; }");
 
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
-    scrollArea->setStyleSheet("border: none;");
+    scrollArea->setStyleSheet("QScrollArea { border: none; background: transparent; }");
 
     QWidget *content = new QWidget();
+    content->setStyleSheet("background: transparent;");
     QVBoxLayout *layout = new QVBoxLayout(content);
     layout->setSpacing(12);
 
@@ -83,6 +94,7 @@ PostDetailDialog::PostDetailDialog(const PostData &post, QWidget *parent)
                 );
             QString qqStr = post.qq;
             connect(copyBtn, &QPushButton::clicked, this, [this, qqStr]() {
+                clickSound->play();
                 QApplication::clipboard()->setText(qqStr);
                 QMessageBox::information(this, "已复制", "QQ号已复制到剪贴板");
             });
@@ -109,6 +121,7 @@ PostDetailDialog::PostDetailDialog(const PostData &post, QWidget *parent)
                 );
             QString wechatStr = post.wechat;
             connect(copyBtn, &QPushButton::clicked, this, [this, wechatStr]() {
+                clickSound->play();
                 QApplication::clipboard()->setText(wechatStr);
                 QMessageBox::information(this, "已复制", "微信号已复制到剪贴板");
             });

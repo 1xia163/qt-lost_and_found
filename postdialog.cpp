@@ -2,6 +2,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
+
 PostDialog::PostDialog(QWidget *parent)
     : QDialog(parent)
 {
