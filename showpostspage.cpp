@@ -101,6 +101,7 @@ void ShowPostsPage::loadPosts()
 
         int index = i;
         connect(imageBtn, &QPushButton::clicked, this, [this, index]() {
+            clickSound->play();
             onImageClicked(index);
         });
 

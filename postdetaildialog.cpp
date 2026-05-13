@@ -148,6 +148,7 @@ PostDetailDialog::PostDetailDialog(const PostData &post, QWidget *parent)
                 );
             QString phoneStr = post.phone;
             connect(copyBtn, &QPushButton::clicked, this, [this, phoneStr]() {
+                clickSound->play();
                 QApplication::clipboard()->setText(phoneStr);
                 QMessageBox::information(this, "已复制", "电话号码已复制到剪贴板");
             });

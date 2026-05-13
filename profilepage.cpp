@@ -206,6 +206,7 @@ void ProfilePage::refreshMyPosts()
 
         PostData postData = post;
         connect(clickBtn, &QPushButton::clicked, this, [this, postData]() {
+            clickSound->play();
             PostDetailDialog dialog(postData, this);
             dialog.exec();
         });

@@ -22,7 +22,7 @@ qt_add_executable(Lost_and_Found
     soundmanager.cpp soundmanager.h
     userdata.h widget.cpp widget.h widget.ui
 
-    effects/bgm.wav effects/click.wav
+
     resources.qrc
 
 )

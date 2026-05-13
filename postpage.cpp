@@ -204,6 +204,55 @@ void PostPage::onSubmit()
         QMessageBox::warning(this, "提示", "请输入物品名称");
         return;
     }
+    // 校验QQ号（如果填写了，必须为10位数字）
+    if (!qq.isEmpty())
+    {
+        if (qq.length() != 10)
+        {
+            QMessageBox::warning(this, "提示", "QQ号必须为10位数字");
+            return;
+        }
+        // 检查是否全为数字
+        bool isNumber = true;
+        for (const QChar &ch : qq)
+        {
+            if (!ch.isDigit())
+            {
+                isNumber = false;
+                break;
+            }
+        }
+        if (!isNumber)
+        {
+            QMessageBox::warning(this, "提示", "QQ号只能包含数字");
+            return;
+        }
+    }
+    // 校验手机号（如果填写了，必须为11位数字）
+    if (!phone.isEmpty())
+    {
+        if (phone.length() != 11)
+        {
+            QMessageBox::warning(this, "提示", "手机号必须为11位数字");
+            return;
+        }
+        // 检查是否全为数字
+        bool isNumber = true;
+        for (const QChar &ch : phone)
+        {
+            if (!ch.isDigit()) {
+                isNumber = false;
+                break;
+            }
+        }
+        if (!isNumber)
+        {
+            QMessageBox::warning(this, "提示", "手机号只能包含数字");
+            return;
+        }
+    }
+
+
 
     emit postSubmitted(tag, title, detail, qq, wechat, phone, selectedImages);
 
@@ -262,3 +311,4 @@ void PostPage::paintEvent(QPaintEvent *event)
         painter.fillRect(this->rect(), QColor("#F7F8FA"));
     }
 }
+

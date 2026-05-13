@@ -27,5 +27,7 @@
         <file>images/up3.png</file>
         <file>images/upan.jpg</file>
         <file>images/watch.jpg</file>
+        <file>effects/bgm.wav</file>
+        <file>effects/click.wav</file>
     </qresource>
 </RCC>

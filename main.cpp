@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     post7.tag = "寻找";
     post7.title = "紫色笔记本";
     post7.detail = "今天早上在公教楼C区201上课落下了，回去找发现不见了，有没有uu看见";
-    post7.qq = "555666777";
+    post7.qq = "5556667771";
     post7.wechat = "";
     post7.phone = "";
     post7.images.append(":/images/book.jpg");
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     post3.tag = "发现";
     post3.title = "手机支架";
     post3.detail = "在理科食堂二楼发现";
-    post3.qq = "987654321";
+    post3.qq = "9876543211";
     post3.wechat = "";
     post3.phone = "";
     post3.images.append(":/images/phone_support.jpg");
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
     post6.tag = "发现";
     post6.title = "水杯回家";
     post6.detail = "在西南门滴滴车筐里发现，绿色保温杯，失主可以联系我。";
-    post6.qq = "111222333";
+    post6.qq = "1112223335";
     post6.wechat = "J989243";
     post6.phone = "";
     post6.images.append(":/images/cup.jpg");
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
     post9.tag = "寻找";
     post9.title = "手表";
     post9.detail = "在操场丢失，黑色表带，表面有轻微划痕。";
-    post9.qq = "999888777";
+    post9.qq = "9998887778";
     post9.wechat = "";
     post9.phone = "13300007777";
     post9.images.append(":/images/watch.jpg");

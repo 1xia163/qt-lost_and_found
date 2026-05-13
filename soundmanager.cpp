@@ -17,8 +17,8 @@ SoundManager::SoundManager()
     bgmPlayer = new QMediaPlayer(this);
     audioOutput = new QAudioOutput(this);
     bgmPlayer->setAudioOutput(audioOutput);
-    bgmPlayer->setSource(QUrl("qrc:/sound_effects/bgm.wav"));
-    audioOutput->setVolume(0.8);  // 背景音乐音量 30%
+    bgmPlayer->setSource(QUrl("qrc:/effects/bgm.wav"));
+    audioOutput->setVolume(0.05);  // 背景音乐音量 30%
 }
 
 SoundManager::~SoundManager()

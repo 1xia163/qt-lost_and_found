@@ -56,6 +56,7 @@ void MainWindow::setupUI()
 
     // 接收首页"发现"/"寻找"信号
     connect(homePage, &HomePage::goToPost, this, [this](const QString &tag) {
+        clickSound->play();
         qDebug() << "goToPost 触发，tag =" << tag;
         if (showPostsPage) {
             stackedWidget->removeWidget(showPostsPage);
@@ -109,6 +110,7 @@ void MainWindow::setupUI()
     // 4. 信号连接
     // 底部导航 - 首页
     connect(btnHome, &QPushButton::clicked, this, [this]() {
+        clickSound->play();
         stackedWidget->setCurrentIndex(0);
         btnHome->setIcon(QIcon(":/images/main_light.png"));
         btnProfile->setIcon(QIcon(":/images/all_light.png"));
@@ -137,7 +139,6 @@ void MainWindow::setupUI()
     // FAB 按钮跳转发帖页
     connect(fabBtn, &QPushButton::clicked, this, [this]() {
         clickSound->play();
-        clickSound->play();
         stackedWidget->setCurrentIndex(2);
         fabBtn->hide();
     });
@@ -145,7 +146,6 @@ void MainWindow::setupUI()
     // 发帖取消
     connect(postPage, &PostPage::cancelPost, this, [this]() {
         clickSound->play();
-       clickSound->play();
         stackedWidget->setCurrentIndex(0);
     });
 
